@@ -9,9 +9,11 @@ WIDTH, HEIGHT = 800, 500
 # Display width and height in Tuple.Because pygame Display width and height as Tuple.
 # Storing the display
 win = pygame.display.set_mode((WIDTH, HEIGHT))
-
 # Define and Display Game name
 pygame.display.set_caption("Hangman Game!")
+
+# ***** fonts
+LETTER_FONT = pygame.font.SysFont("comicsans", 40)
 
 # ***** Load Images *****
 images = []
@@ -23,14 +25,16 @@ for i in range(7):
 RADIUS = 20
 GAP = 15
 letters = []
-
 startx = round((WIDTH - (RADIUS * 2 + GAP) * 13) / 2)  # horizontal
 starty = 400  # vertical stating
+
+A = 65
+
 for i in range(26):
     # x and y position of buttons
     x = startx + GAP * 2 + ((RADIUS * 2 + GAP) * (i % 13))
     y = starty + (i // 13) * (GAP + RADIUS * 2)
-    letters.append([x, y])
+    letters.append([x, y, chr(A + i)])
 
 # ***** Game Variable *****
 # for knowing the status of hangman images which we are using.
@@ -47,10 +51,14 @@ run = True
 
 def draw():
     win.fill(WHITE)
-    # draw buttons
+    # draw buttons on x, y position and letter which we want to draw
     for letter in letters:
-        x, y = letter
+        x, y, ltr = letter
         pygame.draw.circle(win, BLACK, (x, y), RADIUS, 3)
+        # render text means what text you want to get displayed
+        text = LETTER_FONT.render(ltr, 1, BLACK)
+        # draw text on x, y position
+        win.blit(text, (x -text.get_width() / 2 , y - text.get_height() / 2 ))
 
     win.blit(images[hangman_status], (150, 100))
     pygame.display.update()
