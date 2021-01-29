@@ -1,16 +1,13 @@
 import pygame
 import math
+import random
 
 # ***** Setup Display ****
 pygame.init()
 
 # Defining Width and Height of our Game Window
 WIDTH, HEIGHT = 800, 500
-
-# Display width and height in Tuple.Because pygame Display width and height as Tuple.
-# Storing the display
 win = pygame.display.set_mode((WIDTH, HEIGHT))
-# Define and Display Game name
 pygame.display.set_caption("Hangman Game!")
 
 # ***** fonts
@@ -40,9 +37,10 @@ for i in range(26):
     letters.append([x, y, chr(A + i), True])
 
 # ***** Game Variable *****
-# for knowing the status of hangman images which we are using.
 hangman_status = 0
-word = "DEVELOPER"
+words = ["NARUTO", "KAKASHI", "SAITAMA", "KENKANAKI", "EREN", "ITACHI", "MADARA"]
+
+word = random.choice(words)
 guessed = []
 
 # ***** Colors *****
@@ -69,12 +67,9 @@ def draw():
             display_word += letter + " "
         else:
             display_word += "_ "
-            # else is saying if the letter that we have guessed is not in then do this put underscore instead of letter.
 
-
-        # Render text
+# Render text
     text = WORD_FONT.render(display_word, 1, BLACK)
-    # blit or displaying the text on game window
     win.blit(text, (400, 200))
 
     # draw buttons on x, y position and letter which we want to draw
@@ -104,8 +99,6 @@ while run:
     # clock.tick while make the game run at a Constant speed like 60
     clock.tick(FPS)
 
-    draw()
-
     # looping through pygame events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -122,6 +115,7 @@ while run:
                         guessed.append(ltr)
                         if ltr not in word:
                             hangman_status += 1
+    draw()
     won = True
     for letter in word:
             if letter not in guessed:
