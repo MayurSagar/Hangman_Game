@@ -16,6 +16,7 @@ pygame.display.set_caption("Hangman Game!")
 # ***** fonts
 LETTER_FONT = pygame.font.SysFont("comicsans", 40)
 WORD_FONT = pygame.font.SysFont("comicsans", 60)
+TITLE_FONT = pygame.font.SysFont("comicsans", 65)
 
 # ***** Load Images *****
 images = []
@@ -56,6 +57,10 @@ run = True
 
 def draw():
     win.fill(WHITE)
+    #draw title
+    text = TITLE_FONT.render("ANIME HANGMAN", 1 , BLACK )
+    win.blit(text, (WIDTH/2 - text.get_width()/2 , 10 ))
+
     # draw word
     display_word = ""
     for letter in word:
